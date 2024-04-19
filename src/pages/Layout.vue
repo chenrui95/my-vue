@@ -6,7 +6,7 @@
       </el-menu-item>
     </el-menu>
     <el-dropdown class="avatar" trigger="click"  @command="handleAvatar">
-      <el-avatar :size="40" src="/static/assets/avatar.jpeg"></el-avatar>
+      <el-avatar :size="40" src="/assets/avatar.jpeg"></el-avatar>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
       </el-dropdown-menu>
