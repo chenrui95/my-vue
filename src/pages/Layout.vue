@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative;">
-    <el-menu mode="horizontal" :default-active="this.$route.path" @select="handleClick">
+    <el-menu mode="horizontal" :default-active="'/'+this.$route.path.split('/')[1]" @select="handleClick">
       <el-menu-item v-for="menu in menus" :key="menu.path" :index="menu.path">
         {{ menu.name }}
       </el-menu-item>
@@ -11,7 +11,7 @@
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <div class="main">
+    <div>
       <router-view></router-view>
     </div>
   </div>
@@ -43,11 +43,6 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  min-height: calc(100vh - 61px);
-  width: 100%;
-}
-
 .avatar {
   position: absolute;
   right: 16px;

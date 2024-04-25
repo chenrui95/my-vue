@@ -12,11 +12,21 @@ const router = new Router({
     {
       path: '/',
       component: Layout,
+      redirect: '/home',
       children: [
         { path: '/home', component: Home },
         { path: '/weight', component: () => import('@/pages/Weight') },
         { path: '/sports', component: () => import('@/pages/Sport') },
-        { path: '/meal', component: () => import('@/pages/Meal') }
+        {
+          path: '/meal',
+          component: () => import('@/pages/meal/Meal'),
+          children: [
+            { path: '/meal/material', component: () => import('@/pages/meal/Material') },
+            { path: '/meal/food', component: () => import('@/pages/meal/Food') },
+            { path: '/meal/record', component: () => import('@/pages/meal/Record') },
+            { path: '/', redirect: '/meal/material' }
+          ]
+        }
       ]
     }
   ]
