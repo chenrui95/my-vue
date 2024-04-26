@@ -156,7 +156,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .card-wrapper {
   display: flex;
   flex-wrap: wrap;

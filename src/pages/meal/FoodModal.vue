@@ -1,7 +1,7 @@
 <template>
-  <el-drawer :visible="visible" :title="data ? '编辑' : '新增'" size="800px" @close="closeForm">
+  <el-drawer :destroy-on-close="true" :visible="visible" :title="data ? '编辑' : '新增'" size="800px" @close="closeForm">
     <div style="width: 800px; padding-right: 20px;">
-      <el-form v-footer-top :model="form" ref="form" label-width="80px" :rules="rules">
+      <el-form v-footer-top="selectedMode" :model="form" ref="form" label-width="80px" :rules="rules">
         <el-form-item label="名称" required prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"></el-input>
         </el-form-item>

@@ -30,7 +30,7 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
@@ -39,6 +39,16 @@ exports.cssLoaders = function (options) {
         options: Object.assign({}, loaderOptions, {
           sourceMap: options.sourceMap
         })
+      })
+    }
+
+    // 此处为添加的less全局配置代码，其中patterns里路径为需要使用的全局less文件所在的路径
+    if (loader == 'less') {
+      loaders.push({
+        loader: 'style-resources-loader',
+        options: {
+          patterns: path.resolve(__dirname, '../src/css/*.less')
+        }
       })
     }
 
