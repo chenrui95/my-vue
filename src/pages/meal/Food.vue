@@ -11,9 +11,9 @@
         <el-tag
           v-for="(category) in categories"
           :key="category.key"
-          :style="`margin-right: 8px; cursor: pointer; ${category.key === showType? 'color: #fff' : ''}`"
-          :color="category.key === showType? '#409EFF' : ''"
-          @click="getList(category.key, showFavorite, showIndulge)"
+          :style="`margin-right: 8px; cursor: pointer; ${showType.includes(category.key) ? 'color: #fff' : ''}`"
+          :color="showType.includes(category.key) ? '#409EFF' : ''"
+          @click="selectType(category.key)"
           >
           {{ category.name }}
         </el-tag>
@@ -22,12 +22,16 @@
         </el-tooltip>
       </div>
       <div>
-        <el-button :type="!showFavorite && !showIndulge? 'primary' : ''" size="small" round @click="getList(showType, false, false)">全部</el-button>
-        <el-button :type="showFavorite? 'primary' : ''" icon="el-icon-favorite" size="small" round @click="getList(showType, !showFavorite, showIndulge)">我喜欢的</el-button>
-        <el-button :type="showIndulge? 'primary' : ''" icon="el-icon-indulge" size="small" round @click="getList(showType, showFavorite, !showIndulge)">放纵餐</el-button>
+        <el-button :type="!showFavorite && !showIndulge? 'primary' : ''" size="small" round @click="getList(false, false)">全部</el-button>
+        <el-button :type="showFavorite? 'primary' : ''" icon="el-icon-favorite" size="small" round @click="getList(!showFavorite, showIndulge)">我喜欢的</el-button>
+        <el-button :type="showIndulge? 'primary' : ''" icon="el-icon-indulge" size="small" round @click="getList(showFavorite, !showIndulge)">放纵餐</el-button>
       </div>
     </header>
     <div class="list-wrapper">
+      <div class="add-item" @click="showAdd = {visible: true}">
+        <div><i class="el-icon-plus" /></div>
+        新增
+      </div>
       <DataCard @contextmenu="onShowMenu" class="food-item" v-for="(item) in list" :key="item.id"
       :data="{...item, img: item.img || categories.find(c => c.key === item.category).img}" :columns="columns">
         <div class="actions">
@@ -38,22 +42,31 @@
         </div>
       </DataCard>
     </div>
-    <div ref="menu" v-if="showMenu" class="action-menu" :style="`top: ${showMenu.y}px; left: ${showMenu.x}px;`">
-      <div><i class="el-icon-edit" />编辑</div>
-      <div><i class="el-icon-delete" />删除</div>
+    <div v-clickoutside="hideMenu" ref="menu" v-if="showMenu" class="action-menu" :style="`top: ${showMenu.y}px; left: ${showMenu.x}px;`">
+      <div @click="editItem(showMenu.data)" >
+        <i class="el-icon-edit" />编辑
+      </div>
+      <div  @click="deleteItem(showMenu.data.id)">
+        <i class="el-icon-delete" />删除
+      </div>
     </div>
+
+    <FoodModal :visible="showAdd.visible" :data="showAdd.item" @cancel="showAdd = {visible: false}" @confirm="submitAdd"></FoodModal>
   </div>
 </template>
 
 <script>
 import DataCard from '../../components/DataCard.vue'
+import FoodModal from './FoodModal.vue'
+
 export default {
   data () {
     return {
       showFavorite: false,
       showIndulge: false,
-      showType: 'cook',
+      showType: [],
       showMenu: false,
+      showAdd: {visible: false},
       categories: [
         {name: '自制菜', key: 'cook', img: 'https://big.justeasy.cn/effect/202105/20210504142006_6090e796e30d3.jpg'},
         {name: '外卖',
@@ -116,15 +129,19 @@ export default {
     }
   },
   methods: {
-    getList (type, favorite, indulge) {
-      if (this.showType === type) {
-        this.showType = ''
+    selectType (type) {
+      const index = this.showType.indexOf(type)
+      if (index > -1) {
+        this.showType.splice(index, 1)
       } else {
-        this.showType = type
+        this.showType.push(type)
       }
+      this.getList(this.showFavorite, this.showIndulge)
+    },
+    getList (favorite, indulge) {
       this.showFavorite = favorite
       this.showIndulge = indulge
-      // 根据分类\喜欢\放纵获取菜单列表
+      // 根据分类(showType)\喜欢\放纵获取菜单列表
     },
     favoriteItem (id, flag) {
 
@@ -133,17 +150,46 @@ export default {
 
     },
     onShowMenu (data, event) {
-      console.log(data, event)
       this.showMenu = {data, x: event.clientX, y: event.clientY}
+    },
+    editItem (item) {
+      this.showMenu = false
+      // 打开弹窗
+      this.showAdd = {visible: true, item}
+    },
+    deleteItem (id) {
+      this.showMenu = false
+      // 删除菜单
+    },
+    hideMenu () {
+      this.showMenu = false
+    },
+    submitAdd (item) {
+      console.log(item)
+      if (this.showAdd.item) {
+        // 编辑
+      } else {
+        // 新增
+      }
+      this.showAdd = {visible: false}
     }
   },
   components: {
-    DataCard
+    DataCard,
+    FoodModal
   }
 }
 </script>
 
 <style scoped>
+.add-item {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 .list-wrapper {
   padding: 12px 0;
   display: grid;

@@ -1,19 +1,20 @@
 <template>
   <div>
-    <el-collapse v-model="activeNames">
+    <el-collapse v-footer-top  v-model="activeNames" >
       <el-collapse-item class="category" v-for="category of categories" :key="category.name"
         :title="category.title" :name="category.name">
         <div class="card-wrapper">
-          <div class="material-card" v-for="material of materials[category.name]"
+          <div :class="`material-card ${selected.includes(material.id)?'active' : ''}`" v-for="material of materials[category.name]"
             @mouseenter="hoverItem(material, $event)"
             @mouseleave="leaveItem"
+            @click="$emit('select', material)"
             :key="material.id">
               <div style="font-weight: 500;">{{ material.name }}</div>
               <div style="display: flex; justify-content: space-between;">
                 <span>GI值：{{ material.gi }}</span>
                 <span>热量值：{{ material.calorie }}</span>
               </div>
-              <div class="actions">
+              <div v-if="!selectMode" class="actions">
                 <el-button type="primary" icon="el-icon-edit" circle @click="onShowModal(material)"></el-button>
                 <el-button type="danger" icon="el-icon-delete" circle @click="deleteModal = material.id"></el-button>
               </div>
@@ -22,10 +23,13 @@
                 class="mark"></div>
               <div class="description" v-if="showDesc === material.id">{{material.description}}</div>
           </div>
-          <div class="material-card plus-card" @click="onShowModal()">+</div>
+          <div v-if="!selectMode" class="material-card plus-card" @click="onShowModal()">+</div>
         </div>
       </el-collapse-item>
     </el-collapse>
+    <footer class="footer-actions" v-if="selectMode">
+      <el-button type="primary" @click="$emit('confirm')">确认</el-button>
+    </footer>
     <Modal :visible="modal.visible" :title="modal.item ? '编辑' : '新增'" @cancel="closeModal" @confirm="submitModal">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="名称">
@@ -73,7 +77,11 @@ export default {
           { name: '玉米淀粉', gi: 50, calorie: 100, id: 6 }],
         fruits: [
           { name: '苹果', gi: 100, calorie: 100, id: 7 },
-          { name: '香蕉', gi: 60, calorie: 100, id: 8 }]
+          { name: '香蕉', gi: 60, calorie: 100, id: 8 },
+          { name: '香蕉', gi: 60, calorie: 100, id: 9 },
+          { name: '香蕉', gi: 60, calorie: 100, id: 10 },
+          { name: '香蕉', gi: 60, calorie: 100, id: 11 }
+        ]
       },
       showDesc: '',
       modal: {visible: false},
@@ -128,12 +136,22 @@ export default {
       })
     },
     deleteItem () {
-      console.log(this.deleteModal)
       this.deleteModal = -1
     }
   },
   components: {
     Modal
+  },
+  props: {
+    selectMode: {
+      type: Boolean,
+      default: false
+    },
+    selected: {
+      type: Array,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: []
+    }
   }
 }
 </script>
@@ -153,6 +171,10 @@ export default {
   position: relative;
   padding: 4px 8px;
   margin: 0 12px 12px 0;
+}
+
+.active {
+  border-color: #409eff;
 }
 
 .material-card .actions {
@@ -200,6 +222,9 @@ export default {
 .category /deep/ .el-collapse-item__header {
   background-color: #f2f2f2;
   padding: 0 12px;
+}
+.category /deep/ .el-collapse-item__content {
+  padding-bottom: 0;
 }
 
 .description {
