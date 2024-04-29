@@ -23,6 +23,7 @@ const router = new Router({
           children: [
             { path: '/meal/material', component: () => import('@/pages/meal/Material') },
             { path: '/meal/food', component: () => import('@/pages/meal/Food') },
+            { path: '/meal/food/category', component: () => import('@/pages/meal/FoodCategory') },
             { path: '/meal/record', component: () => import('@/pages/meal/Record') },
             { path: '/', redirect: '/meal/material' }
           ]

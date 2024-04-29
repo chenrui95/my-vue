@@ -1,7 +1,7 @@
 <template>
   <ul class="menu-item-wrapper">
     <li @click="$emit('clickItem', menu)">
-      <div :class="['item-content', theme || 'dark', {selected: $route.path === menu.link}]">
+      <div :class="['item-content', theme || 'dark', {selected: ($route.path + '').includes(menu.link)}]">
         <span>{{ menu.title }}</span>
         <span v-if="menu.children && menu.children.length">{{
           extendIds.includes(menu.id)? '▲' : '▼'

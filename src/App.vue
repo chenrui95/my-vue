@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 body {
   padding: 0;
   margin: 0;
@@ -62,6 +62,13 @@ body {
 .link-like {
   color: #409EFF;
   cursor: pointer;
+}
+.btn-like {
+  cursor: pointer;
+
+  &:hover {
+    color: #409EFF;
+  }
 }
 .footer-actions {
   text-align: right;

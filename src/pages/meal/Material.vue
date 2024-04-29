@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-collapse v-footer-top  v-model="activeNames" >
+    <el-collapse v-footer-top="selectMode"  v-model="activeNames" >
       <el-collapse-item class="category" v-for="category of categories" :key="category.name"
         :title="category.title" :name="category.name">
         <div class="card-wrapper">
-          <div :class="`material-card ${selected.includes(material.id)?'active' : ''}`" v-for="material of materials[category.name]"
+          <div :class="`material-card ${selected && selected.includes(material.id)?'active' : ''}`" v-for="material of materials[category.name]"
             @mouseenter="hoverItem(material, $event)"
             @mouseleave="leaveItem"
             @click="$emit('select', material)"
@@ -28,6 +28,7 @@
       </el-collapse-item>
     </el-collapse>
     <footer class="footer-actions" v-if="selectMode">
+      <el-button type="success" @click="random()">随机生成</el-button>
       <el-button type="primary" @click="$emit('confirm')">确认</el-button>
     </footer>
     <Modal :visible="modal.visible" :title="modal.item ? '编辑' : '新增'" @cancel="closeModal" @confirm="submitModal">
@@ -137,6 +138,36 @@ export default {
     },
     deleteItem () {
       this.deleteModal = -1
+    },
+    getRandomItem (list, count) {
+      const length = list.length
+      const res = []
+      const insert = () => {
+        const index = Math.floor(Math.random() * length)
+        if (!res.includes(list[index])) {
+          res.push(list[index])
+        } else {
+          insert()
+        }
+      }
+      new Array(count).fill('').forEach(() => {
+        insert()
+      })
+      return res
+    },
+    random () {
+      const config = {
+        vegetables: 2,
+        meat: 1,
+        carbon: 1,
+        fruits: 1
+      }
+      const list = Object.keys(config).map(key => this.getRandomItem(this.materials[key], config[key])).flat()
+      this.$emit('select', list.map(item => item.id))
+      this.$message({
+        message: `为你推荐${list.map(item => item.name).join('、')}。`,
+        type: 'success'
+      })
     }
   },
   components: {
@@ -148,9 +179,6 @@ export default {
       default: false
     },
     selected: {
-      type: Array,
-      // eslint-disable-next-line vue/require-valid-default-prop
-      default: []
     }
   }
 }

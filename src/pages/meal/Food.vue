@@ -4,6 +4,7 @@
     自制菜、外卖、外食、零食和点心、奶茶咖啡饮料  种类也可以新增，新增的可以删除和修改，需要设置默认图片和key（都是必填）
     具体内容可以有：图片、名称、价格、卡路里、食材、菜谱链接、评价等
     可以给菜单加喜欢和放纵餐标记功能，推荐时喜欢中的优先级更高，可以筛选我喜欢的菜单，放纵餐
+    加一个随机选择两种蔬菜、一种肉蛋奶、一种碳水、一种水果的功能
   -->
   <div>
     <header style="display: flex; justify-content: space-between;">
@@ -18,7 +19,7 @@
           {{ category.name }}
         </el-tag>
         <el-tooltip content="管理分类">
-          <el-button icon="el-icon-setting" circle size="small"></el-button>
+          <el-button icon="el-icon-setting" circle size="small" @click="$router.push('/meal/food/category')"></el-button>
         </el-tooltip>
       </div>
       <div>
@@ -33,6 +34,7 @@
         新增
       </div>
       <DataCard @contextmenu="onShowMenu" class="food-item" v-for="(item) in list" :key="item.id"
+      @click="showDetail = item.id"
       :data="{...item, img: item.img || categories.find(c => c.key === item.category).img}" :columns="columns">
         <div class="actions">
           <i v-if="item.favorite" class="el-icon-favorite" @click="favoriteItem(item.id, true)" />
@@ -50,7 +52,7 @@
         <i class="el-icon-delete" />删除
       </div>
     </div>
-
+    <FoodDetail :visible="showDetail" :id="showDetail" @cancel="showDetail = false"></FoodDetail>
     <FoodModal :visible="showAdd.visible" :data="showAdd.item" @cancel="showAdd = {visible: false}" @confirm="submitAdd"></FoodModal>
   </div>
 </template>
@@ -58,6 +60,7 @@
 <script>
 import DataCard from '../../components/DataCard.vue'
 import FoodModal from './FoodModal.vue'
+import FoodDetail from './FoodDetail.vue'
 
 export default {
   data () {
@@ -67,6 +70,7 @@ export default {
       showType: [],
       showMenu: false,
       showAdd: {visible: false},
+      showDetail: false,
       categories: [
         {name: '自制菜', key: 'cook', img: 'https://big.justeasy.cn/effect/202105/20210504142006_6090e796e30d3.jpg'},
         {name: '外卖',
@@ -176,7 +180,8 @@ export default {
   },
   components: {
     DataCard,
-    FoodModal
+    FoodModal,
+    FoodDetail
   }
 }
 </script>

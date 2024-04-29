@@ -1,5 +1,5 @@
 <template>
-  <div class="data-card" @contextmenu.prevent.stop="$emit('contextmenu', data, $event)">
+  <div class="data-card" @contextmenu.prevent.stop="$emit('contextmenu', data, $event)" @click="$emit('click', data, $event)">
     <el-image style="height: 100px; width: 100%" :src="data.img" fit="cover">
     </el-image>
     <div>{{ data[nameKey] }}</div>
