@@ -23,9 +23,13 @@
         </el-tooltip>
       </div>
       <div>
-        <el-button :type="!showFavorite && !showIndulge? 'primary' : ''" size="small" round @click="getList(false, false)">全部</el-button>
-        <el-button :type="showFavorite? 'primary' : ''" icon="el-icon-favorite" size="small" round @click="getList(!showFavorite, showIndulge)">我喜欢的</el-button>
-        <el-button :type="showIndulge? 'primary' : ''" icon="el-icon-indulge" size="small" round @click="getList(showFavorite, !showIndulge)">放纵餐</el-button>
+        <el-button :type="!showFavorite && !showIndulge? 'primary' : ''" size="small"
+          round @click="getList(false, false)">全部</el-button>
+        <el-button :type="showFavorite? 'primary' : ''"
+          icon="el-icon-favorite" size="small" round
+          @click="getList(!showFavorite, showIndulge)">我喜欢的</el-button>
+        <el-button :type="showIndulge? 'primary' : ''" icon="el-icon-indulge" size="small" round
+          @click="getList(showFavorite, !showIndulge)">放纵餐</el-button>
       </div>
     </header>
     <div class="list-wrapper">
@@ -58,9 +62,9 @@
 </template>
 
 <script>
-import DataCard from '../../components/DataCard.vue'
-import FoodModal from './FoodModal.vue'
-import FoodDetail from './FoodDetail.vue'
+import DataCard from '../../components/DataCard.vue';
+import FoodModal from './FoodModal.vue';
+import FoodDetail from './FoodDetail.vue';
 
 export default {
   data () {
@@ -130,21 +134,21 @@ export default {
       columns: [
         {key: 'calorie', label: '卡路里', default: '未知'}
       ]
-    }
+    };
   },
   methods: {
     selectType (type) {
-      const index = this.showType.indexOf(type)
+      const index = this.showType.indexOf(type);
       if (index > -1) {
-        this.showType.splice(index, 1)
+        this.showType.splice(index, 1);
       } else {
-        this.showType.push(type)
+        this.showType.push(type);
       }
-      this.getList(this.showFavorite, this.showIndulge)
+      this.getList(this.showFavorite, this.showIndulge);
     },
     getList (favorite, indulge) {
-      this.showFavorite = favorite
-      this.showIndulge = indulge
+      this.showFavorite = favorite;
+      this.showIndulge = indulge;
       // 根据分类(showType)\喜欢\放纵获取菜单列表
     },
     favoriteItem (id, flag) {
@@ -154,28 +158,28 @@ export default {
 
     },
     onShowMenu (data, event) {
-      this.showMenu = {data, x: event.clientX, y: event.clientY}
+      this.showMenu = {data, x: event.clientX, y: event.clientY};
     },
     editItem (item) {
-      this.showMenu = false
+      this.showMenu = false;
       // 打开弹窗
-      this.showAdd = {visible: true, item}
+      this.showAdd = {visible: true, item};
     },
     deleteItem (id) {
-      this.showMenu = false
+      this.showMenu = false;
       // 删除菜单
     },
     hideMenu () {
-      this.showMenu = false
+      this.showMenu = false;
     },
     submitAdd (item) {
-      console.log(item)
+      console.log(item);
       if (this.showAdd.item) {
         // 编辑
       } else {
         // 新增
       }
-      this.showAdd = {visible: false}
+      this.showAdd = {visible: false};
     }
   },
   components: {
@@ -183,7 +187,7 @@ export default {
     FoodModal,
     FoodDetail
   }
-}
+};
 </script>
 
 <style scoped>

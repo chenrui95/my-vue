@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal'
+import Modal from '@/components/Modal';
 export default {
   name: 'FoodDetail',
   components: {Modal},
@@ -82,20 +82,20 @@ export default {
           custom: true,
           img: 'https://img95.699pic.com/photo/50096/6083.jpg_wh860.jpg'}
       ]
-    }
+    };
   },
   methods: {
     handleEdit (data) {
-      this.showModal = {visible: true, data}
-      this.form = data
+      this.showModal = {visible: true, data};
+      this.form = data;
     },
     beforeUpload (file) {
-      this.fileList = [file]
-      return false
+      this.fileList = [file];
+      return false;
     },
     closeModal () {
-      this.showModal = {visible: false}
-      this.form = {name: '', key: ''}
+      this.showModal = {visible: false};
+      this.form = {name: '', key: ''};
     },
     handleSubmit () {
       this.$refs.form.validate((valid) => {
@@ -104,18 +104,18 @@ export default {
           this.$message({
             type: 'error',
             message: '请上传默认图片'
-          })
-          return
+          });
+          return;
         }
         if (valid) {
           // TODO: 要提交给接口
-          console.log(this.form, this.fileList)
-          this.closeModal()
+          console.log(this.form, this.fileList);
+          this.closeModal();
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

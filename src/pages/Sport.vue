@@ -19,7 +19,7 @@ export default {
       sports: [
         {id: 1, name: '游泳', calorie: 1000, img: ''}
       ]
-    }
+    };
   }
-}
+};
 </script>

@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import Menu from '../../components/menu/Menu.vue'
+import Menu from '../../components/menu/Menu.vue';
 
 export default {
   data () {
-    return {}
+    return {};
   },
   components: {
     Menu
@@ -47,11 +47,11 @@ export default {
   methods: {
     clickMenu (menu) {
       if (menu.link) {
-        this.$router.push(menu.link)
+        this.$router.push(menu.link);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import './utils/index.js'
+import './utils/index.js';
 
 export default {
   name: 'App'
-}
+};
 </script>
 
 <style lang="less">

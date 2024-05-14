@@ -5,30 +5,30 @@
 </template>
 
 <script>
-import MenuItem from './MenuItem.vue'
+import MenuItem from './MenuItem.vue';
 export default {
   name: 'Menu',
   data () {
     return {
       extendIds: [],
       selectedId: -1
-    }
+    };
   },
   methods: {
     clickItem (menu) {
-      const extended = this.extendIds.includes(menu.id)
-      const children = menu.children ? menu.children.map(child => child.id) : []
+      const extended = this.extendIds.includes(menu.id);
+      const children = menu.children ? menu.children.map(child => child.id) : [];
       if (extended) {
-        this.extendIds = this.extendIds.filter(id => ![menu.id, ...children].includes(id))
+        this.extendIds = this.extendIds.filter(id => ![menu.id, ...children].includes(id));
       } else {
-        this.extendIds.push(menu.id, ...children)
+        this.extendIds.push(menu.id, ...children);
       }
-      this.$emit('clickMenu', menu)
+      this.$emit('clickMenu', menu);
     }
   },
   props: ['menus', 'theme'],
   components: {MenuItem}
-}
+};
 </script>
 
 <style scoped>

@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'modal',
+  name: 'my-modal',
   props: {
     visible: {
       type: Boolean,
@@ -29,5 +29,5 @@ export default {
       default: '50%'
     }
   }
-}
+};
 </script>

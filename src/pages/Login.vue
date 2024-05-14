@@ -28,18 +28,18 @@ export default {
         username: [{ required: true, message: '请输入用户名' }],
         password: [{ required: true, message: '请输入密码' }]
       }
-    }
+    };
   },
   methods: {
     handleLogin () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.$router.push('/home')
+          this.$router.push('/home');
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

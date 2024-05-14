@@ -27,19 +27,19 @@ export default {
         {path: '/sports', name: '健身管理'},
         {path: '/meal', name: '饮食管理'}
       ]
-    }
+    };
   },
   methods: {
     handleClick (path) {
-      this.$router.push(path)
+      this.$router.push(path);
     },
     handleAvatar (v) {
       if (v === 'logout') {
-        this.$router.push('/login')
+        this.$router.push('/login');
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

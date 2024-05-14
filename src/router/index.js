@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/pages/Home'
-import Login from '@/pages/Login'
-import Layout from '@/pages/Layout.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import Layout from '@/pages/Layout.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   routes: [
@@ -31,12 +31,12 @@ const router = new Router({
       ]
     }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   // to and from are both route objects. must call `next`.
   // TODO: check if user is logged in
-  next()
-})
+  next();
+});
 
-export default router
+export default router;

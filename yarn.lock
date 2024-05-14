@@ -8089,6 +8089,11 @@ vue@^2.5.2:
     "@vue/compiler-sfc" "2.7.16"
     csstype "^3.1.0"
 
+vuex@3.6.1:
+  version "3.6.1"
+  resolved "https://repo.datagrand.com/repository/npm-group/vuex/-/vuex-3.6.1.tgz#d11863811bef93102f1f6625240b27f4ea0f1254"
+  integrity sha512-fsVwP9akzE2TYxZcFm3SHQgbyOI5c13IZJ9GH1ivrCeTaXk8JiEm9szJvIxO5+evu2+REk2E9smjce+9vgVGLg==
+
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
   resolved "https://repo.datagrand.com/repository/npm-group/watchpack-chokidar2/-/watchpack-chokidar2-2.0.1.tgz#38500072ee6ece66f3769936950ea1771be1c957"

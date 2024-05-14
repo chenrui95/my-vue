@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Modal from '../../components/Modal.vue'
+import Modal from '../../components/Modal.vue';
 export default {
   data () {
     return {
@@ -98,62 +98,62 @@ export default {
         calorie: 0,
         description: ''
       }
-    }
+    };
   },
   methods: {
     getColor (gi) {
       // 低于55是低GI食物
-      return gi <= 55 ? '#f56c6c' : gi >= 70 ? '#67c23a' : 'transparent'
+      return gi <= 55 ? '#f56c6c' : gi >= 70 ? '#67c23a' : 'transparent';
     },
     hoverItem (item) {
       if (item.description) {
-        this.showDesc = item.id
+        this.showDesc = item.id;
       }
     },
     leaveItem () {
-      this.showDesc = ''
+      this.showDesc = '';
     },
     onShowModal (item) {
-      this.modal.visible = true
-      this.modal.item = item
+      this.modal.visible = true;
+      this.modal.item = item;
       if (item) {
-        this.form = item
+        this.form = item;
       }
     },
     closeModal () {
-      this.modal = {visible: false}
+      this.modal = {visible: false};
       this.form = {
         name: '',
         gi: 0,
         calorie: 0,
         description: ''
-      }
+      };
     },
     submitModal () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.closeModal()
+          this.closeModal();
         }
-      })
+      });
     },
     deleteItem () {
-      this.deleteModal = -1
+      this.deleteModal = -1;
     },
     getRandomItem (list, count) {
-      const length = list.length
-      const res = []
+      const length = list.length;
+      const res = [];
       const insert = () => {
-        const index = Math.floor(Math.random() * length)
+        const index = Math.floor(Math.random() * length);
         if (!res.includes(list[index])) {
-          res.push(list[index])
+          res.push(list[index]);
         } else {
-          insert()
+          insert();
         }
-      }
+      };
       new Array(count).fill('').forEach(() => {
-        insert()
-      })
-      return res
+        insert();
+      });
+      return res;
     },
     random () {
       const config = {
@@ -161,13 +161,13 @@ export default {
         meat: 1,
         carbon: 1,
         fruits: 1
-      }
-      const list = Object.keys(config).map(key => this.getRandomItem(this.materials[key], config[key])).flat()
-      this.$emit('select', list.map(item => item.id))
+      };
+      const list = Object.keys(config).map(key => this.getRandomItem(this.materials[key], config[key])).flat();
+      this.$emit('select', list.map(item => item.id));
       this.$message({
         message: `为你推荐${list.map(item => item.name).join('、')}。`,
         type: 'success'
-      })
+      });
     }
   },
   components: {
@@ -181,7 +181,7 @@ export default {
     selected: {
     }
   }
-}
+};
 </script>
 
 <style scoped lang="less">

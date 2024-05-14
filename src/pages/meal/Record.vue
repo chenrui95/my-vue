@@ -5,13 +5,37 @@
     如果有计划的饮食，可以展示为卡片
     要有计划饮食功能
   -->
-  <div>饮食记录</div>
+  <div>
+    <header>
+      <div>{{ date }}</div>
+    </header>
+  </div>
 </template>
 
 <script>
+import { getDate } from '../../utils';
 export default {
   data () {
-    return {}
+    return {
+      date: getDate(),
+      interval: null
+    };
+  },
+  mounted () {
+    this.interval = setInterval(() => {
+      this.date = getDate();
+    }, 1000);
+  },
+  beforeDestroy () {
+    clearInterval(this.interval);
   }
-}
+};
 </script>
+
+<style scoped>
+.header {
+  display: flex;
+  height: 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+</style>

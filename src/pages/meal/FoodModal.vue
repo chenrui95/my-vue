@@ -18,6 +18,7 @@
         </el-form-item>
         <el-form-item label="食材">
           <div @click="showDrawer = true" class="link-like">去选择</div>
+          {{ selectedStr }}
         </el-form-item>
         <el-form-item label="链接" prpp="link">
           <el-input v-model="form.link" placeholder="请输入连接"></el-input>
@@ -41,12 +42,11 @@
 </template>
 
 <script>
-import Modal from '../../components/Modal.vue'
-import Material from './Material.vue'
+import Material from './Material.vue';
 export default {
   name: 'FoodModal',
   components: {
-    Modal, Material
+    Material
   },
   props: ['visible', 'data'],
   data () {
@@ -58,23 +58,23 @@ export default {
       },
       showDrawer: false,
       selected: []
-    }
+    };
   },
   watch: {
     data (newVal) {
       if (newVal) {
-        this.form = newVal
-        this.selected = newVal.materials || []
+        this.form = newVal;
+        this.selected = newVal.materials || [];
       } else {
-        this.initForm()
+        this.initForm();
       }
     }
   },
   methods: {
     beforeUpload (file) {
-      console.log(file)
-      this.fileList = [file]
-      return false
+      console.log(file);
+      this.fileList = [file];
+      return false;
     },
     initForm () {
       this.form = {
@@ -84,11 +84,11 @@ export default {
         calorie: '',
         link: '',
         description: ''
-      }
+      };
     },
     closeForm () {
-      this.$emit('cancel')
-      this.initForm()
+      this.$emit('cancel');
+      this.initForm();
     },
     submitForm () {
       this.$refs.form.validate((valid) => {
@@ -97,25 +97,31 @@ export default {
             ...this.form,
             img: this.fileList[0],
             materiels: this.selected
-          })
+          });
         }
-      })
+      });
     },
     selectMaterial (materiel) {
       if (Array.isArray(materiel)) {
-        this.selected = materiel
-        return
+        this.selected = materiel;
+        return;
       }
-      const index = this.selected.indexOf(materiel.id)
+      const index = this.selected.indexOf(materiel.id);
       if (index === -1) {
-        this.selected.push(materiel.id)
+        this.selected.push(materiel.id);
       } else {
-        this.selected.splice(index, 1)
+        this.selected.splice(index, 1);
       }
     }
   },
   created () {
-    this.initForm()
+    this.initForm();
+  },
+  computed: {
+    selectedStr () {
+      // TODO: 根据列表获取name
+      return this.selected.join('/');
+    }
   }
-}
+};
 </script>

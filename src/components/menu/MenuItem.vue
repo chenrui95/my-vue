@@ -18,7 +18,7 @@
 export default {
   name: 'menu-item',
   props: ['menu', 'extendIds', 'theme']
-}
+};
 </script>
 
 <style scoped>

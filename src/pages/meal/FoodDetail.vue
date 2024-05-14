@@ -68,15 +68,15 @@ export default {
         img: 'https://materials.cdn.bcebos.com/images/19250972/d1ae0cc3172937554dc085b8950afe11.jpeg'
       },
       category: [{key: 'cook', label: '自制菜'}]
-    }
+    };
   },
   methods: {
     viewRecipe () {
-      window.open(this.detail.recipe)
+      window.open(this.detail.recipe);
     }
   },
   props: ['id', 'visible']
-}
+};
 </script>
 
 <style scoped lang="less">

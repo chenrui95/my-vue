@@ -22,7 +22,7 @@ export default {
     columns: {},
     nameKey: { default: 'name' }
   }
-}
+};
 </script>
 
 <style scoped>
