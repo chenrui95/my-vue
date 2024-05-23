@@ -1,27 +1,27 @@
 <template>
   <div>
-    <el-collapse v-footer-top="selectMode"  v-model="activeNames" >
+    <el-collapse v-footer-top="selectMode" v-model="activeNames">
       <el-collapse-item class="category" v-for="category of categories" :key="category.name"
         :title="category.title" :name="category.name">
         <div class="card-wrapper">
-          <div :class="`material-card ${selected && selected.includes(material.id)?'active' : ''}`" v-for="material of materials[category.name]"
-            @mouseenter="hoverItem(material, $event)"
-            @mouseleave="leaveItem"
-            @click="$emit('select', material)"
-            :key="material.id">
-              <div style="font-weight: 500;">{{ material.name }}</div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>GI值：{{ material.gi }}</span>
-                <span>热量值：{{ material.calorie }}</span>
-              </div>
-              <div v-if="!selectMode" class="actions">
-                <el-button type="primary" icon="el-icon-edit" circle @click="onShowModal(material)"></el-button>
-                <el-button type="danger" icon="el-icon-delete" circle @click="deleteModal = material.id"></el-button>
-              </div>
-              <div
-                :style="`border-right-color: ${getColor(material.gi)}; border-top-color: ${getColor(material.gi)}`"
-                class="mark"></div>
-              <div class="description" v-if="showDesc === material.id">{{material.description}}</div>
+          <div :class="`material-card ${selected && selected.includes(material.id) ? 'active' : ''}`"
+            v-for="material of materials[category.name]" @mouseenter="hoverItem(material, $event)"
+            @mouseleave="leaveItem" @click="$emit('select', material)" :key="material.id">
+            <div style="font-weight: 500;">{{ material.name }}</div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>GI值：{{ material.gi }}</span>
+              <span>热量值：{{ material.calorie }}</span>
+            </div>
+            <div v-if="!selectMode" class="actions">
+              <el-button type="primary" icon="el-icon-edit" circle
+                @click="onShowModal(material)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle
+                @click="deleteModal = material.id"></el-button>
+            </div>
+            <div
+              :style="`border-right-color: ${getColor(material.gi)}; border-top-color: ${getColor(material.gi)}`"
+              class="mark"></div>
+            <div class="description" v-if="showDesc === material.id">{{ material.description }}</div>
           </div>
           <div v-if="!selectMode" class="material-card plus-card" @click="onShowModal()">+</div>
         </div>
@@ -31,24 +31,27 @@
       <el-button type="success" @click="random()">随机生成</el-button>
       <el-button type="primary" @click="$emit('confirm')">确认</el-button>
     </footer>
-    <Modal :visible="modal.visible" :title="modal.item ? '编辑' : '新增'" @cancel="closeModal" @confirm="submitModal">
+    <Modal :visible="modal.visible" :title="modal.item ? '编辑' : '新增'" @cancel="closeModal"
+      @confirm="submitModal">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="form.name" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="GI值">
-          <el-input-number v-model="form.gi" :min="1" placeholder="请输入" ></el-input-number>
+          <el-input-number v-model="form.gi" :min="1" placeholder="请输入"></el-input-number>
         </el-form-item>
         <el-form-item label="热量">
-          <el-input-number v-model="form.calorie" :min="1" placeholder="请输入" ></el-input-number> 大卡/100g
+          <el-input-number v-model="form.calorie" :min="1" placeholder="请输入"></el-input-number>
+          大卡/100g
         </el-form-item>
         <el-form-item label="描述">
-          <el-input type="textarea"
-          :rows="2" v-model="form.description" placeholder="请输入"></el-input>
+          <el-input type="textarea" :rows="2" v-model="form.description"
+            placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
     </Modal>
-    <Modal width="300px" title="确认删除" :visible="deleteModal !== -1" @cancel="deleteModal = -1" @confirm="deleteItem">
+    <Modal width="300px" title="确认删除" :visible="deleteModal !== -1" @cancel="deleteModal = -1"
+      @confirm="deleteItem">
       删除后数据将不可恢复，请确认是否删除
     </Modal>
   </div>
@@ -57,7 +60,7 @@
 <script>
 import Modal from '../../components/Modal.vue';
 export default {
-  data () {
+  data() {
     return {
       activeNames: ['vegetables', 'fruits', 'carbon', 'meat'],
       categories: [
@@ -72,7 +75,8 @@ export default {
           { name: '黄瓜', gi: 80, calorie: 100, id: 2 }],
         meat: [
           { name: '牛肉', gi: 70, calorie: 200, id: 3 },
-          { name: '鸡蛋', gi: 100, calorie: 100, id: 4 }],
+          { name: '鸡蛋', gi: 100, calorie: 100, id: 4 }
+        ],
         carbon: [
           { name: '豆浆', gi: 30, calorie: 100, id: 5 },
           { name: '玉米淀粉', gi: 50, calorie: 100, id: 6 }],
@@ -85,7 +89,7 @@ export default {
         ]
       },
       showDesc: '',
-      modal: {visible: false},
+      modal: { visible: false },
       deleteModal: -1,
       rules: {
         name: [{ required: true, message: '请输入' }],
@@ -101,27 +105,27 @@ export default {
     };
   },
   methods: {
-    getColor (gi) {
+    getColor(gi) {
       // 低于55是低GI食物
       return gi <= 55 ? '#f56c6c' : gi >= 70 ? '#67c23a' : 'transparent';
     },
-    hoverItem (item) {
+    hoverItem(item) {
       if (item.description) {
         this.showDesc = item.id;
       }
     },
-    leaveItem () {
+    leaveItem() {
       this.showDesc = '';
     },
-    onShowModal (item) {
+    onShowModal(item) {
       this.modal.visible = true;
       this.modal.item = item;
       if (item) {
         this.form = item;
       }
     },
-    closeModal () {
-      this.modal = {visible: false};
+    closeModal() {
+      this.modal = { visible: false };
       this.form = {
         name: '',
         gi: 0,
@@ -129,17 +133,17 @@ export default {
         description: ''
       };
     },
-    submitModal () {
+    submitModal() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.closeModal();
         }
       });
     },
-    deleteItem () {
+    deleteItem() {
       this.deleteModal = -1;
     },
-    getRandomItem (list, count) {
+    getRandomItem(list, count) {
       const length = list.length;
       const res = [];
       const insert = () => {
@@ -155,7 +159,7 @@ export default {
       });
       return res;
     },
-    random () {
+    random() {
       const config = {
         vegetables: 2,
         meat: 1,
@@ -251,6 +255,7 @@ export default {
   background-color: #f2f2f2;
   padding: 0 12px;
 }
+
 .category /deep/ .el-collapse-item__content {
   padding-bottom: 0;
 }
