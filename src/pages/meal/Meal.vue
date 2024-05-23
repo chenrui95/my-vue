@@ -29,6 +29,11 @@
         title: '饮食记录',
         id: 3,
         link: '/meal/record'
+      },
+      {
+        title: '功能管理',
+        id: 4,
+        link: '/meal/setting'
       }
     ]" theme="light"></Menu>
     <div class="content">

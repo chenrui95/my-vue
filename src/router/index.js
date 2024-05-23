@@ -25,6 +25,7 @@ const router = new Router({
             { path: '/meal/food', component: () => import('@/pages/meal/Food') },
             { path: '/meal/food/category', component: () => import('@/pages/meal/FoodCategory') },
             { path: '/meal/record', component: () => import('@/pages/meal/Record') },
+            { path: '/meal/setting', component: () => import('@/pages/meal/Setting') },
             { path: '/', redirect: '/meal/material' }
           ]
         }
